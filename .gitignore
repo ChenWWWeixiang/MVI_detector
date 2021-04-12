@@ -1,0 +1,26 @@
+.idea
+.pytest_cache
+.ipynb_checkpoints
+venv/
+SimpleElastix/
+build/
+conda-recipe/
+voxelmorph/
+/bioimage-io/**/pytorch3dunet
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Tensorboard logs
+logs/
+
+# PyTorch models
+*.pytorch
+
+# Python packages
+pytorch3dunet.egg-info/
+dist/
+
+*.pkl

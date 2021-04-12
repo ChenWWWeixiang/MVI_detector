@@ -1,0 +1,2 @@
+2021-02-20 10:25:27,884 - __main__ - INFO - auto: 512	t1_PRE	[0, 100]	validation	0.5812+-0.1681	0.6231+-0.2103	0.4253+-0.2666	0.7535+-0.223	test	0.6021+-0.0706	0.623+-0.0825	0.4717+-0.1641	0.7138+-0.1702
+2021-02-20 10:25:27,886 - __main__ - INFO - mannual: 512	t1_PRE	[0, 100]	validation	nan+-nan	nan+-nan	nan+-nan	nan+-nan	test	nan+-nan	nan+-nan	nan+-nan	nan+-nan

@@ -1,0 +1,74 @@
+# Sample configuration file for training a 3D U-Net on a task of predicting the nuclei in 3D stack from the lightsheet
+# microscope. Training done with Binary Cross-Entropy.
+# Training and validation data can be downloaded from: https://osf.io/thxzn/
+
+# use a fixed random seed to guarantee that when you run the code twice you will get the same outcome
+manual_seed: 0
+device: 'cuda:3'
+# model configuration
+thsets: [0,0,50,50,150,550]
+thsets2: [2000,1000,550,150,800,1000]
+model:
+  use2d: true
+  loadpretrainedmodel: true
+  pretrainedmodelpath: "/mnt/newdisk0/cwx/cls_logs/saves/focal_epochlatest.pt" 
+  configs: 'R50-ViT-L_16'
+
+# trainer configuration
+trainer:
+  mixup: true
+  checkpoint_dir: "/mnt/newdisk0/cwx/cls_logs/" #single
+  # how many iterations between validations
+  validate_after_iters: 20
+  # how many iterations between tensorboard logging
+  log_after_iters: 10
+  # number of epochs that a checkpoint has
+  start_epoch: 0
+  # max number of epochs
+  max_epoch: 100
+  # max number of iterations
+  max_iterations: 80000
+  validation_iters: 20
+  lr: 0.00005s
+  # weight decay
+  weight_decay: 0.0001
+
+
+# evaluation metric
+eval_metric:
+  # use average precision metric
+  name: Accuracy
+  # values on which the nuclei probability maps will be thresholded for AP computation
+  #thresholds: [0.4, 0.5, 0.6, 0.7, 0.8]
+  #metric: 'ap'
+
+# learning rate scheduler configuration
+lr_scheduler:
+  # reduce learning rate when evaluation metric plateaus
+  name: ReduceLROnPlateau
+  # use 'max' if eval_score_higher_is_better=True, 'min' otherwise
+  mode: max
+  # factor by which learning rate will be reduced
+  factor: 0.1
+  # number of *validation runs* with no improvement after which learning rate will be reduced
+  patience: 5
+
+# data loaders configuration
+loader:
+  train:
+    # paths to the training datasets
+    data_list: '/mnt/data9/deep_R/pytorch-3dunet/pytorch3dunet/datasets/lists/train_cls2d.list'
+    batchsize: 48
+    shuffle: true
+    # how many subprocesses to use for data loading
+    numworkers: 16
+    
+  # configuration of the val loader
+  test:
+    # paths to the training datasets
+    data_list: '/mnt/data9/deep_R/pytorch-3dunet/pytorch3dunet/datasets/lists/test_cls2d.list'
+    batchsize: 24
+    shuffle: false
+    # how many subprocesses to use for data loading
+    numworkers: 8
+
